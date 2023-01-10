@@ -24,6 +24,11 @@ Route::get('/show_dashboard', 'AdminController@showDashBoard');
 Route::post('/admin_dashboard', 'AdminController@dashboard');
 Route::get('/logout', 'AdminController@logout');
 
+// ADMIN books
+Route::get('/show_books', 'AdminController@show_all_books');
+Route::get('/show_add_books', 'AdminController@show_add_books');
+Route::get('/save_product', 'ProductController@save_product');
+
 // admin category
 Route::get('/add_category', 'CategoryProduct@show_form_add_category');
 Route::get('/all_category', 'CategoryProduct@show_all_category');
