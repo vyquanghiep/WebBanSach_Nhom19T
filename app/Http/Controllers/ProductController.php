@@ -56,7 +56,7 @@ class ProductController extends Controller
         $data['bookname'] = $request->bookname;
         $data['bookpages'] = $request->bookpages;
         $data['bookimageurl'] = "null";
-        $data['bookdescription'] = "null";
+        $data['bookdescription'] = $request->description;
         $data['bookweight'] = $request->bookweight;
         $data['quantity'] = $request->quantity;
         $data['releasedate'] = $request->releasedate;
@@ -80,31 +80,35 @@ class ProductController extends Controller
         Session::put('message', 'Xóa sách thành công');
         return Redirect::to('show_books');
     }
-    public function edit_product($product_id)
+    public function edit_book($bookid)
     {
         $this->AuthLogin();
-        $cate_product = DB::table('tbl_category_product')->orderby('category_id', 'desc')->get();
-        $brand_product = DB::table('tbl_brand')->orderby('brand_id', 'desc')->get();
+        $list_nxb = DB::table('nxb')->get();
+        $list_danhmuc = DB::table('categories')->limit(5)->get();
+        $edit_book = DB::table('books')->where('bookid', $bookid)->get();
+        $manager_book  = view('admin.EditBook')->with('edit_book', $edit_book)->with('list_nxb', $list_nxb)->with('list_danhmuc', $list_danhmuc);
 
-        $edit_product = DB::table('tbl_product')->where('product_id', $product_id)->get();
-
-        $manager_product  = view('admin.edit_product')->with('edit_product', $edit_product)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
-
-        return view('admin_layout')->with('admin.edit_product', $manager_product);
+        return view('AdminLayout')->with('admin.EditBook', $manager_book);
     }
-    public function update_book(Request $request)
+    public function update_book(Request $request, $bookid)
     {
         $this->AuthLogin();
-        if ($request->bookid) {
-            $book = array();
-            $book['bookname'] = trim($request->bookname);
-            // $category['parentId'] = trim($request->category_pid);
-            DB::table('books')
-                ->where('bookid', $request->bookid)
-                ->update($book);
-            Session::put('message', 'Update sách thành công');
-            return Redirect::to('show_books');
-        }
+        $data = array();
+        $data['bookname'] = $request->bookname;
+        $data['bookpages'] = $request->bookpages;
+        $data['bookimageurl'] = "null";
+        $data['bookdescription'] = $request->bookdescription;
+        $data['bookweight'] = $request->bookweight;
+        $data['quantity'] = $request->quantity;
+        $data['releasedate'] = $request->releasedate;
+        $data['price'] = $request->price;
+        $data['nxbid'] = $request->nxb;
+        $data['categoryid'] = $request->category;
+        $data['type'] = 1;
+
+        DB::table('books')->where('bookid', $bookid)->update($data);
+        Session::put('message', 'Cập sản phẩm thành công');
+        return Redirect::to('show_books');
     }
 
 

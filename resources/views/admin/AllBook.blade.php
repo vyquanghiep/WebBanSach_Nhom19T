@@ -28,6 +28,13 @@
       </div>
     </div>
     <div class="table-responsive">
+        <?php
+                            $message = Session::get('message');
+                            if($message){
+                                echo '<span class="text-alert">'.$message.'</span>';
+                                Session::put('message',null);
+                            }
+                            ?>
       <table class="table table-striped b-t b-light">
         <thead>
           <tr>
@@ -55,10 +62,10 @@
             <td>{{$book->price}}</td>
             <td>
               <button class="btn btn-warning">
-                <a href="{{URL::to('update_book/'.$book->bookid)}}">Sửa</a>
+                <a href="{{URL::to('/edit_book/'.$book->bookid)}}">Sửa</a>
               </button>
               <button class="btn btn-danger">
-                <a href="{{URL::to('/delete_book/'.$book->bookid)}}">Xóa</a>
+                <a onclick="return confirm('Bạn có chắc là muốn xóa sản phẩm này ko?')" href="{{URL::to('/delete_book/'.$book->bookid)}}">
               </button>
             </td>
           </tr>
