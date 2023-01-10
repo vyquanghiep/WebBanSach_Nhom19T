@@ -44,3 +44,29 @@ Route::post('/payment', 'CheckoutController@payment');
 // search
 Route:: get('/search', 'SearchController@show_search_results');
 Route:: post('/get_suggestion', 'SearchController@show_suggestion');
+
+// admin nxb
+Route::get('/all_nxb', 'NXBController@show_all_NXB');
+Route::get('/add_nxb', 'NXBController@show_form_add_NXB');
+Route::get('/delete_nxb/{nxbid}', 'NXBController@delete_nxb');
+Route::post('/save_nxb', 'NXBController@add_nxb');
+Route::get('/update_nxb/{nxbid}', 'NXBController@show_form_edit_NXB');
+Route::post('/save_editnxb', 'NXBController@update_NXB');
+
+
+// admin users
+Route::get('/all_users', 'UsersController@show_all_users');
+Route::post('/reload_users', 'UsersController@get_all_users');
+Route::post('/admin_enable', 'UsersController@enableAdmin');
+Route::post('/admin_disable', 'UsersController@disableAdmin');
+Route::post('/user_disable', 'UsersController@disableUser');
+Route::post('/user_enable', 'UsersController@enableUser');
+Route::post('/remove_user', 'UsersController@remove_user');
+
+// admin orders
+Route::get('/all_orders', 'OrderController@show_all_orders');
+Route::get('/order_detail/{id}', 'OrderController@show_order_details');
+Route::post('/order_confirm', 'OrderController@confirm_order');
+Route::post('/order_success', 'OrderController@success_order');
+Route::post('/order_delete', 'OrderController@delete_order');
+Route::get('/order_filter', 'OrderController@filter_orders');
