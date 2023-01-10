@@ -68,7 +68,7 @@ class NXBController extends Controller
     public function delete_NXB($id) {
         $this->auth_login_admin();
         DB::table('nxb')->where('nxbid', $id)->delete();
-        Session::put('message', 'Đã thêm nxb thành công');
+        Session::put('message', 'Đã xoa nxb thành công');
         return Redirect::to('all_nxb');
     }
 

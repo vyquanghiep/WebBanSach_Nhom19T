@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,12 +10,34 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\Route;
+//user
+Route::get('/', 'HomeController@index');
+Route::get('/trang-chu', 'HomeController@index');
+Route::get('/danh-muc-san-pham/{categoryid}', 'CategoryProduct@show_category_home');
+Route::get('/chi-tiet-san-pham/{bookid}', 'ProductController@details_product');
+Route::post('/change_password', 'HomeController@changedPassword');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// books
+Route::get('/show_books', 'AdminController@show_all_books');
+Route::get('/show_add_books', 'AdminController@show_add_books');
 
-// BEGIN ADMIN
+
+
+//Profile + Ordered
+Route::get('/show-profile', 'ProfileController@show_profile');
+Route::get('/show-details-ordered/{orderid}', 'ProfileController@show_details_ordered');
+Route::post('/load-comment', 'ProfileController@load_comment');
+Route::post('/send-comment', 'ProfileController@send_comment');
+Route::post('/update-profile', 'ProfileController@update_profile');
+
+//login
+Route::post('/dangky', 'HomeController@postDangKy');
+Route::post('/dangnhap', 'HomeController@postDangNhap');
+Route::get('/dangxuat', 'HomeController@getDangXuat');
+
+
 // admin dashboard
 Route::get('/admin', 'AdminController@index');
 Route::get('/show_dashboard', 'AdminController@showDashBoard');
