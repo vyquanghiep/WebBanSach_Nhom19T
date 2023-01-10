@@ -12,14 +12,19 @@ use Illuminate\Support\Facades\Redirect;
 class ProductController extends Controller
 {
     //ADMIN
+    public function index()
+    {
+        return view('AdminLogin');
+    }
     public function AuthLogin()
     {
-        $admin_id = Session::get('admin_id');
-        if ($admin_id) {
-            return Redirect::to('dashboard');
-        } else {
-            return Redirect::to('admin')->send();
-        }
+        $admin_id = Session::get('isadmin');
+        echo $admin_id;
+        // if($admin_id == 1){
+        //     return Redirect::to('dashboard');
+        // }else{
+        //     return Redirect::to('admin')->send();
+        // }
     }
 
     public function show_all_books()
@@ -53,13 +58,13 @@ class ProductController extends Controller
         $data['bookimageurl'] = "null";
         $data['bookdescription'] = "null";
         $data['bookweight'] = $request->bookweight;
-        $data['bookweight'] = $request->bookweight;
+        $data['quantity'] = $request->quantity;
         $data['releasedate'] = $request->releasedate;
         $data['price'] = $request->price;
         $data['nxbid'] = $request->nxb;
         $data['categoryid'] = $request->category;
         $data['type'] = 1;
-        if ($request->category_name) {
+        if ($request->bookname) {
             DB::table('books')->insert($data);
             Session::put('message', 'Thêm sản phẩm thành công');
             return Redirect::to('show_books');
@@ -68,17 +73,28 @@ class ProductController extends Controller
         }
     }
 
-    public function delete_book($id)
+    public function delete_book($bookid)
     {
-        $this->auth_login_admin();
-        DB::table('books')->where('bookid', $id)->delete();
+        $this->AuthLogin();
+        DB::table('books')->where('bookid', $bookid)->delete();
         Session::put('message', 'Xóa sách thành công');
         return Redirect::to('show_books');
     }
+    public function edit_product($product_id)
+    {
+        $this->AuthLogin();
+        $cate_product = DB::table('tbl_category_product')->orderby('category_id', 'desc')->get();
+        $brand_product = DB::table('tbl_brand')->orderby('brand_id', 'desc')->get();
 
+        $edit_product = DB::table('tbl_product')->where('product_id', $product_id)->get();
+
+        $manager_product  = view('admin.edit_product')->with('edit_product', $edit_product)->with('cate_product', $cate_product)->with('brand_product', $brand_product);
+
+        return view('admin_layout')->with('admin.edit_product', $manager_product);
+    }
     public function update_book(Request $request)
     {
-        $this->auth_login_admin();
+        $this->AuthLogin();
         if ($request->bookid) {
             $book = array();
             $book['bookname'] = trim($request->bookname);

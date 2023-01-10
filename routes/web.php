@@ -47,8 +47,10 @@ Route::get('/logout', 'AdminController@logout');
 // ADMIN books
 Route::get('/show_books', 'ProductController@show_all_books');
 Route::get('/show_add_books', 'ProductController@show_add_books');
-Route::get('/delete_book', 'ProductController@delete_book');
 Route::post('/save_product', 'ProductController@save_product');
+Route::get('/delete_book/{bookid}', 'ProductController@delete_book');
+Route::get('/edit_book/{bookid}', 'ProductController@edit_book');
+Route::post('/update_book/{bookid}', 'ProductController@update_book');
 // admin category
 Route::get('/add_category', 'CategoryProduct@show_form_add_category');
 Route::get('/all_category', 'CategoryProduct@show_all_category');
