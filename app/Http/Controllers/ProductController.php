@@ -56,7 +56,7 @@ class ProductController extends Controller
         $data['bookname'] = $request->bookname;
         $data['bookpages'] = $request->bookpages;
         $data['bookimageurl'] = "null";
-        $data['bookdescription'] = $request->description;
+        $data['bookdescription'] = $request->bookdescription;
         $data['bookweight'] = $request->bookweight;
         $data['quantity'] = $request->quantity;
         $data['releasedate'] = $request->releasedate;

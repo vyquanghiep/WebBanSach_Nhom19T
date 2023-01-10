@@ -65,7 +65,7 @@
                 <a href="{{URL::to('/edit_book/'.$book->bookid)}}">Sửa</a>
               </button>
               <button class="btn btn-danger">
-                <a onclick="return confirm('Bạn có chắc là muốn xóa sản phẩm này ko?')" href="{{URL::to('/delete_book/'.$book->bookid)}}">
+                <a onclick="return confirm('Bạn có chắc là muốn xóa sản phẩm này ko?')" href="{{URL::to('/delete_book/'.$book->bookid)}}">Xoá</a>
               </button>
             </td>
           </tr>
