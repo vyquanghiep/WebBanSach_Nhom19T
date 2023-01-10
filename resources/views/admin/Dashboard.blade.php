@@ -1,2 +1,0 @@
-@extends('AdminLayout') 
-@section('AdminContent') 
